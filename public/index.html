@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Space+Mono:400,700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Restaurant Industry Performance Under COVID-19</title>
+    <link rel="stylesheet" href="/main.css" />
+  </head>
+  <body>
+    <div id="globeViz" style="width:70%;float:left;"></div>
+    <div class="top-info-container">
+      <div class="title">Global View</div>
+    </div>
+
+    <div class="bottom-info-container">
+      <div style="display: flex; justify-content: center;">
+        <div class="timeline-container">
+          <button disabled style="margin-right: 10px;" class="play-button">
+            Play
+          </button>
+          <input
+            class="slider"
+            disabled
+            type="range"
+            min="0"
+            max="1"
+            step="1"
+          />
+          <span
+            style="font-size: 14px; color: #ccd6f6;"
+            class="slider-date"
+          ></span>
+        </div>
+      </div>
+      <div style="font-size: 14px; color: #ccd6f6; margin-top: 35px;">
+        Total Counts <span class="updated"></span>
+      </div>
+      <div style="color: #e6f1ff; padding: 0 5px;">
+        INFECTED: <span id="infected">0</span> • DEATHS:
+        <span id="deaths">0</span> • RECOVERED: <span id="recovered">0</span>
+      </div>
+    </div>
+    
+    <div class="right-text-container">
+      This is text
+    </div>
+    
+    <div class="section2">
+      Section2
+    </div>
+    <script type="module" src="/_dist_/app.js"></script>
+  </body>
+</html>
