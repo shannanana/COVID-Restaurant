@@ -1,7 +1,7 @@
 {
-  "name": "covid3d",
+  "name": "infoVis-project",
   "version": "0.0.1",
-  "description": "An interactive 3D visualization of COVID-19.",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "dev": "snowpack dev",
@@ -9,7 +9,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "",
   "devDependencies": {
     "@snowpack/plugin-optimize": "^0.2.6",
     "snowpack": "^2.15.0"
