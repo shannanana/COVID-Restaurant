@@ -1,7 +1,9 @@
+        import * as d3 from 'd3';
+ 
         var states = ["Global", "United States", "California", "Florida"], dateLeft = [], dateRight = [];
         var stas = [];
         var csv11 = [], csv22 = [];
-        d3.csv("left_new.csv").then(function (csv) {
+        d3.csv("./_dist_/data/left_new.csv").then(function (csv) {
             csv11 = csv;
             csv.forEach(function (item) {
                 if (stas.indexOf(item.State) == -1) {
@@ -23,7 +25,7 @@
 
             loadHeat("left", csv, dateLeft);
 
-            d3.csv("right_new.csv").then(function (csv2) {
+            d3.csv("./_dist_/data/right_new.csv").then(function (csv2) {
                 csv22 = csv2;
                 csv2.forEach(function (item) {
                     if (dateRight.indexOf(item.Date) == -1) {
@@ -94,7 +96,7 @@
                 .append("div")
                 .style("opacity", 0)
                 .attr("class", "tooltip")
-                .style("background-color", "#000220")
+                .style("background-color", "black")
                 .style("border", "solid")
                 .style("border-width", "2px")
                 .style("border-radius", "5px")
