@@ -171,45 +171,62 @@ var rightAxisLabel = svg.append('text')
 
 const detailBoxOffset = 10;
 const lineHeight = 15;
-const boxWidth = 100;
-const boxHeight = 100;
+const boxWidth = 150;
+const boxHeight = lineHeight * 4;
 
-function updateDetailBox(date, region=selectedRegionList[selectedRegion]) {
-	svg.select('.detailBox').remove()
+const detailBoxDateFormatter = d3.timeFormat('%b %d');
 
-	var detailBox = svg.append('g')
-		.classed('detailBox', true)
-		.attr('transform', 'translate('+[chartXPadding + detailBoxOffset, chartYPadding + detailBoxOffset]+')');
+var detailBox = svg.append('g')
+	.classed('detailBox', true)
+	.attr('transform', 'translate('+[chartXPadding + detailBoxOffset, chartYPadding + detailBoxOffset]+')')
+	.attr('opacity', 0)
 
-	
+var detailBoxFrameRect = detailBox.append('rect')
+	.classed('detailOverlayRect', true)
+	.attr('width', boxWidth)
+	.attr('height', boxHeight)
+
+var dateText = detailBox.append('text')
+	.attr('transform', 'translate('+[10, lineHeight]+')')
+	.attr('font-weight', 'bold')
+
+var	dinerTextLabel = detailBox.append('text')
+	.attr('transform', 'translate('+[10, lineHeight * 2]+')')
+	.text('Seated Diner')
+
+var	dinerText = detailBox.append('text')
+	.attr('transform', 'translate('+[10, lineHeight * 3]+')')
+
+var	covidTextLabel = detailBox.append('text')
+	.attr('transform', 'translate('+[10, lineHeight * 4]+')')
+
+var	covidText = detailBox.append('text')
+	.attr('transform', 'translate('+[10, lineHeight * 5]+')')
+
+function updateDetailBox(date, region=selectedRegionList[selectedRegion]) {	
 	let dateIndex = indexOfDate(date);
 
-	// let switchPositionDate = dateList.length * (boxWidth + detailBoxOffset) / (chartWidth - 2 * chartXPadding)
+	dateText.text(detailBoxDateFormatter(date));
+	dinerText.text(region.data[dateIndex] + '%');
 
-	// if (dateIndex < dateList.length / ) {
-	// 	detailBox.attr('transform', 'translate('+[chartWidth - chartXPadding - boxWidth - detailBoxOffset, chartHeight - chartYPadding - boxHeight - detailBoxOffset]+')');
-	// } else {
-	// 	detailBox.attr('transform', 'translate('+[chartXPadding + detailBoxOffset, chartYPadding + detailBoxOffset]+')');
-	// }
+	let switchPositionDate = (selectedDateIndexRange[1] - selectedDateIndexRange[0]) * (boxWidth + detailBoxOffset) / (chartWidth - 2 * chartXPadding)
 
-	detailBox.append('rect')
-		.classed('detailOverlayRect', true)
-		.attr('width', boxWidth)
-		.attr('height', boxHeight)
+	if (dateIndex < switchPositionDate ) {
+		detailBox.attr('transform', 'translate('+[chartWidth - chartXPadding - boxWidth - detailBoxOffset, chartHeight - chartYPadding - boxHeight - detailBoxOffset]+')');
+	} else {
+		detailBox.attr('transform', 'translate('+[chartXPadding + detailBoxOffset, chartYPadding + detailBoxOffset]+')');
+	}
 
-	var dateText = detailBox.append('text')
-		.attr('transform', 'translate('+[10, lineHeight]+')')
-		.attr('font-weight', 'bold')
-		.text(dateFormatter(date));
-
-	var	dinerText = detailBox.append('text')
-		.attr('transform', 'translate('+[10, lineHeight * 2]+')')
-		.text(region.data[dateIndex]);
-
-	if (region.covidData !== undefined && region.covidData[selectedCovidDataKey] !== undefined) {
-		var	covidText = detailBox.append('text')
-			.attr('transform', 'translate('+[10, lineHeight * 3]+')')
-			.text(region.covidData[selectedCovidDataKey][dateIndex]);
+	if (region.covidData !== undefined && region.covidData[selectedCovidDataKey] !== undefined) {	
+		covidText.text(region.covidData[selectedCovidDataKey][dateIndex])
+		covidText.attr('opacity', 1)
+		covidTextLabel.text('Covid ' + selectedCovidDataKey)
+		covidTextLabel.attr('opacity', 1)
+		detailBoxFrameRect.attr('height', boxHeight + 2 * lineHeight);
+	} else {
+		covidText.attr('opacity', 0)
+		covidTextLabel.attr('opacity', 0)
+		detailBoxFrameRect.attr('height', boxHeight);
 	}
 }
 
@@ -232,6 +249,23 @@ function updateChart(dateIndexRange=selectedDateIndexRange, region=selectedRegio
 	updateDinerChart()
 	updateCovidChart()
 }
+
+var lg = svg.append("defs").append("linearGradient")
+	.attr("id", "mygrad")//id of the gradient
+	.attr("x1", "0%")
+	.attr("x2", "0%")
+	.attr("y1", "0%")
+	.attr("y2", "100%")//since its a vertical linear gradient 
+		
+lg.append("stop")
+	.attr("offset", "0%")
+	.style("stop-color", "#fdffc2")//top
+	.style("stop-opacity", 0.1)
+
+lg.append("stop")
+	.attr("offset", "100%")
+	.style("stop-color", "#f06e00")//bottom
+	.style("stop-opacity", 0.9)
 
 function updateDinerChart(dateIndexRange=selectedDateIndexRange, region=selectedRegionList[selectedRegion]) {
 	let dateIndexStart = selectedDateIndexRange[0];
@@ -292,7 +326,8 @@ function updateDinerChart(dateIndexRange=selectedDateIndexRange, region=selected
 
 	area.merge(areaEnter)
 		.attr('d', valueArea)
-		.attr('pointer-events', 'none');
+		.attr('pointer-events', 'none')
+		.style('fill', 'url(#mygrad)');
 
 // Draw overlay markers
 	let markersG = svg.selectAll('.dinerDataPoint')
@@ -308,11 +343,14 @@ function updateDinerChart(dateIndexRange=selectedDateIndexRange, region=selected
 		.attr('opacity', 0)
 		.on('mouseover', function(i, d){ // WTF d and i are reversed ...
     		d3.select(this).attr('opacity', 1);
+    		d3.select(this).raise();		
+   			detailBox.attr('opacity', 1);
+   			detailBox.raise();
     		updateDetailBox(d);
 	    })
 	    .on('mouseleave', function() {
 	    	d3.select(this).attr('opacity', 0);
-	    	svg.select('.detailBox').remove()
+	    	svg.select('.detailBox').attr('opacity', 0);
 	    });
 
 	markersGEnter.append('circle')

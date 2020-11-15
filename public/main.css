@@ -175,7 +175,7 @@ body {
 
 .dinerDataLine {
   fill: none;
-  stroke: steelblue;
+  stroke: #c4c4c4;
   stroke-width: 2px;
 }
 
@@ -183,11 +183,6 @@ body {
   fill: none;
   stroke: #f22c5a;
   stroke-width: 3px;
-}
-
-.dinerDataArea {
-  fill: steelblue;
-  opacity: 0.5;
 }
 
 .annotationCircle {
