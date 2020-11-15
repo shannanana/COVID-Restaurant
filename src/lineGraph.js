@@ -5,15 +5,14 @@ var x = 5;
 
 var sectionDiv = d3.select('#lineGraphSection');
 
-const chartWidth = 700;
-const chartHeight = 700;
+const chartWidth = 1000;
+const chartHeight = 500;
 const chartXPadding = 100;
-const chartYPadding = 100;
+const chartYPadding = 50;
 
 var svg = sectionDiv.append('svg')
 	.attr('width', chartWidth)
 	.attr('height', chartHeight)
-	.style('border', '1px solid #777');
 
 var dateList = [];
 var cityList = {};
@@ -170,6 +169,50 @@ var rightAxisLabel = svg.append('text')
 	.attr("text-anchor", "middle")
 	.attr('transform', 'translate('+[chartWidth-chartXPadding+axisLabelOffset, chartHeight/2]+') rotate(-90)')
 
+const detailBoxOffset = 10;
+const lineHeight = 15;
+const boxWidth = 100;
+const boxHeight = 100;
+
+function updateDetailBox(date, region=selectedRegionList[selectedRegion]) {
+	svg.select('.detailBox').remove()
+
+	var detailBox = svg.append('g')
+		.classed('detailBox', true)
+		.attr('transform', 'translate('+[chartXPadding + detailBoxOffset, chartYPadding + detailBoxOffset]+')');
+
+	
+	let dateIndex = indexOfDate(date);
+
+	// let switchPositionDate = dateList.length * (boxWidth + detailBoxOffset) / (chartWidth - 2 * chartXPadding)
+
+	// if (dateIndex < dateList.length / ) {
+	// 	detailBox.attr('transform', 'translate('+[chartWidth - chartXPadding - boxWidth - detailBoxOffset, chartHeight - chartYPadding - boxHeight - detailBoxOffset]+')');
+	// } else {
+	// 	detailBox.attr('transform', 'translate('+[chartXPadding + detailBoxOffset, chartYPadding + detailBoxOffset]+')');
+	// }
+
+	detailBox.append('rect')
+		.classed('detailOverlayRect', true)
+		.attr('width', boxWidth)
+		.attr('height', boxHeight)
+
+	var dateText = detailBox.append('text')
+		.attr('transform', 'translate('+[10, lineHeight]+')')
+		.attr('font-weight', 'bold')
+		.text(dateFormatter(date));
+
+	var	dinerText = detailBox.append('text')
+		.attr('transform', 'translate('+[10, lineHeight * 2]+')')
+		.text(region.data[dateIndex]);
+
+	if (region.covidData !== undefined && region.covidData[selectedCovidDataKey] !== undefined) {
+		var	covidText = detailBox.append('text')
+			.attr('transform', 'translate('+[10, lineHeight * 3]+')')
+			.text(region.covidData[selectedCovidDataKey][dateIndex]);
+	}
+}
+
 function getDateScale(dateExtent, chartExtent = [chartXPadding, chartWidth - chartXPadding]) {	
 	let dateScale = d3.scaleTime()
 		.domain(dateExtent)
@@ -251,65 +294,81 @@ function updateDinerChart(dateIndexRange=selectedDateIndexRange, region=selected
 		.attr('d', valueArea)
 		.attr('pointer-events', 'none');
 
-// Draw circle marks within g
+// Draw overlay markers
 	let markersG = svg.selectAll('.dinerDataPoint')
 		.data(dates, function(d, i) {
 			return d;
 		})
-		.on('mouseover', function(d,i){
-    		d3.select(this).attr('opacity', 1);
-    		// d3.select(this).moveToFront();
-	    })
-	    .on('mouseleave', function(d,i){
-	    	d3.select(this).attr('opacity', 0);
-	    })
 
 	markersG.exit().remove();
-
-	let annotationLine = d3.line()
 	    
 	let markersGEnter = markersG.enter()
 		.append('g')
-		.classed('dinerDataPoint', true)	
+		.classed('dinerDataPoint', true)
+		.attr('opacity', 0)
+		.on('mouseover', function(i, d){ // WTF d and i are reversed ...
+    		d3.select(this).attr('opacity', 1);
+    		updateDetailBox(d);
+	    })
+	    .on('mouseleave', function() {
+	    	d3.select(this).attr('opacity', 0);
+	    	svg.select('.detailBox').remove()
+	    });
 
-	// FIXME - low: pass mouse event to all items rather than redrawing
 	markersGEnter.append('circle')
-		.classed('annotationCircle', true)
-		.attr('cx', 0)
-		.attr('cy', function(d, i) {
-			return valueScale(region.data[dateIndexStart + i])
-		})
+		.classed('annotationCircle', true);
 
 	markersGEnter.append("line")
-		.classed('annotationLine', true)
-  		.attr('x1', 0)
-	    .attr('y1', chartYPadding)
-	    .attr('x2', 0)
-	    .attr('y2', function(d, i) {
-	    	return valueScale(region.data[dateIndexStart + i]);
-	    });
+		.classed('annotationLine', true);
 
 	markersGEnter.append("line")
 		.classed('annotationLineHandle', true)
-  		.attr('x1', 0)
+		.attr('stroke', 'white')
+		.attr('opacity', 0.01);
+
+
+	let allMarkersG = markersG.merge(markersGEnter);
+
+	allMarkersG.attr('transform', function(d, i) {
+            return 'translate('+[dateScale(d), 0]+')';
+        });
+
+	allMarkersG.selectAll('line')
+		.data(dates, function(d, i) {
+			return d;
+		})
+		.attr('x1', 0)
 	    .attr('y1', chartYPadding)
 	    .attr('x2', 0)
 	    .attr('y2', function(d, i) {
 	    	return valueScale(region.data[dateIndexStart + i]);
-	    })
-	    .attr('stroke', 'black')
-	    .attr('opacity', 0.01);
+	    });
 
-// FIXME: 
-
-	markersG.merge(markersGEnter)
-		.attr('transform', function(d, i) {
-            return 'translate('+[dateScale(d), 0]+')';
-        });
-	markersG.merge(markersGEnter).selectAll('.annotationLineHandle')
-		.attr('stroke-width', function(d){
+	allMarkersG.selectAll('.annotationLineHandle')
+		.data(dates, function(d, i) {
+			return d;
+		})
+		.attr('x1', 0)
+	    .attr('y1', chartYPadding)
+	    .attr('x2', 0)
+	    .attr('y2', chartHeight - chartYPadding)
+	    	// function(d, i) {
+	    // 	return
+	    // 	return valueScale(region.data[dateIndexStart + i]);
+	    // })
+	    .attr('stroke-width', function(d){
 	    	return (chartWidth - 2 * chartXPadding) / (dateIndexEnd - dateIndexStart + 1);
 	    });
+
+	allMarkersG.selectAll('circle')
+		.data(dates, function(d, i) {
+			return d;
+		})
+		.attr('cx', 0)
+		.attr('cy', function(d, i) {
+			return valueScale(region.data[dateIndexStart + i])
+		});		
+
 
 	// axis
 	xAxisTop.call(d3.axisTop(dateScale));
@@ -337,35 +396,6 @@ function updateCovidChart(valueKey=selectedCovidDataKey, dateIndexRange=selected
 	let valueScale = getValueScale(valueExtent);
 
 	let dates = dateList.slice(dateIndexStart, dateIndexEnd+1);
-
-	// Draw circle marks within g
-	// let circlesGExit = svg.selectAll('.covidDataPoint')
-	// 	.data(dates, function(d, i) {
-	// 		return d;
-	// 	})
-	// 	.exit()
-	// 	.remove()
-
-	// let circlesG = svg.selectAll('.covidDataPoint')
-	// 	.data(dates, function(d, i) {
-	// 		return d;
-	// 	})
-
-	// let circlesGEnter = svg.selectAll('.covidDataPoint')
-	// 	.data(dates, function(d, i) {
-	// 		return d;
-	// 	})
-	// 	.enter()
-	// 	.append('g')
-	// 	.classed('covidDataPoint', true);
-
-	// circlesG.merge(circlesGEnter)
-	// 	.attr('transform', function(d, i) {
- //            return 'translate('+[dateScale(d), valueScale(region.covidData[valueKey][dateIndexStart + i])]+')';
- //        })
-	// 	.append('circle')
-	// 	.attr('r', 5)
-	// 	.attr('fill', '#c4c4c4');
 
 // FIXME - high: null data gaps https://bocoup.com/blog/showing-missing-data-in-line-charts
 	// Draw line
@@ -426,6 +456,7 @@ var scopeLabel = selectorDiv.append('label')
 	.text('Region Scope: ');
 
 var scopeSelector = selectorDiv.append('select')
+	.classed('custom-select', true)
 	.attr('id', 'scopeSelector')
 	.on('change', scopeChanged);
 
@@ -448,6 +479,7 @@ var regionLabel = selectorDiv.append('label')
 	.text('Country: ');
 
 var regionSelector = selectorDiv.append('select')
+	.classed('custom-select', true)
 	.attr('id', 'regionSelector')
 	.on('change', regionChanged);
 
@@ -518,6 +550,7 @@ var covidDataKeyLabel = selectorDiv.append('label')
 	.text('Covid Data');
 
 var covidDataKeySelector = selectorDiv.append('select')
+	.classed('custom-select', true)
 	.attr('id', 'covidDataKeySelector')
 	.on('change', covidDataKeyChanged);
 
