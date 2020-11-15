@@ -8,8 +8,8 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    
-    <title>Restaurant Industry Performance Under COVID-19</title>   
+
+    <title>Restaurant Industry Performance Under COVID-19</title>
   </head>
 
   <body>
@@ -26,25 +26,25 @@
     </div>
 
     <!-- Header -->
-    <header class="w3-display-container w3-content" style="max-width:1500px;" id="home">
+    <header class="w3-display-container w3-content w3-white" style="max-width:1500px;" id="home">
       <img class="w3-image" src="Title img.png" alt="Title img" width="1400" height="1500">
       <div class="w3-display-left w3-center">
         <h1 style="padding-left: 100px" id="title1">COVID-19 Restaurant Viz</h1>
         <h3 style="padding-left: 50px">Team Wasabi Oreo</h3>
       </div>
-      <div class="w3-container w3-center" id="overview">
+      <div class="w3-container w3-center w3-white" id="overview">
         <h3>Overview</h3>
         <img class="w3-image"  src="line.png" width="50" height="2">
-        <p class="w3-center" style="margin-inline-start:300px; margin-inline-end: 300px;">This project examines the evolving situation and challenges faced
+        <p class="w3-center" style="margin-inline-start:300px; margin-inline-end: 300px; padding-bottom:30px">This project examines the evolving situation and challenges faced
            by the global restaurant industry under the impact of pandemic (February 2020 - present) specifically through the lens of changes in
            customer behavior and public sentiment towards the pandemic. </p>
       </div>
     </header>
-   
-    <div class=w3-container>
-      <div class="w3-row w3-center title">Global View</div>
-      
-      <div class="w3-col w3-padding-large" id="globeViz" style="width:70%"></div>     
+
+    <div class="w3-container" >
+      <div class="w3-row w3-center title" style="padding-top: 10px">Global View</div>
+
+      <div class="w3-col w3-padding-large" id="globeViz" style="width:70%"></div>
       <div class="w3-col w3-padding-large" style="width:30%;color:white">This is text</div>
 
       <div class="w3-row w3-center">
@@ -77,7 +77,50 @@
       </div>
 
     </div>
-    
+
+
+
+</div>
+    <div id="nav">
+      <h1>Mobility Change by Date</h1>
+      <p>
+        Select Date:
+        <span id="currentDate"></span>
+        <input id="date" type="range" step="1" />
+
+        Choose Categories:
+        <select name="categories" id="category-select">
+          <option selected value="residential">Residential</option>
+          <option value="workplaces">Workplaces</option>
+          <option value="transit_stations">Transit Stations</option>
+          <option value="parks">Parks</option>
+          <option value="grocery_and_pharmacy">Grocery and Pharmacy</option>
+          <option value="retail_and_recreation">Retail and Recreastion</option>
+        </select>
+      </p>
+      <p>Click on a state to see the trends. Default: Georgia</p>
+    </div>
+
+    <section class="container-mobility">
+      <div class="map">
+        <svg width="800" height="400" id="map"></svg>
+      </div>
+
+      <div class="bar">
+        <svg width="300" height="400" id="bar"></svg>
+      </div>
+    </section>
+
+    <div class="tooltip"></div>
+
+    <script src="https://d3js.org/d3.v4.js"></script>
+    <script src="https://unpkg.com/topojson@3"></script>
+    <script src="https://d3js.org/d3-scale-chromatic.v2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
+    <script type="module" src="/_dist_/mobility.js"></script>
+
+
+
     <!-- <div class="w3-container w3-center" id="globeViz" style="width:70%;float:left;"></div>
     <div class="w3-row w3-center top-info-container">
       <div class="title">Global View</div>
@@ -111,11 +154,11 @@
         <span id="deaths">0</span> • RECOVERED: <span id="recovered">0</span>
       </div>
     </div>
-    
+
     <div class="right-text-container">
       This is text
     </div>
-    
+
     <div class="section2">
       Section2
     </div> -->
@@ -133,8 +176,9 @@
       <div class="w3-col" style="width:30%" id="lineGraphSection"></div>
     </div>
 
+
     <script type="module" src="/_dist_/app.js"></script>
-    <script type="module" src="/_dist_/lineGraph.js"></script> 
-    
+    <script type="module" src="/_dist_/lineGraph.js"></script>
+
   </body>
 </html>

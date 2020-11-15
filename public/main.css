@@ -9,6 +9,7 @@ body {
   background: black;
 }
 
+
 .top-info-container {
   z-index: 1;
   top: 20px;
@@ -32,7 +33,7 @@ body {
   color: white;
   text-align: center;
   width: 30%;
-  float:right; 
+  float:right;
 }
 
 .section2 {
@@ -258,3 +259,101 @@ body {
 }
 
 
+
+#nav {
+  background-color: transparent;
+      background: #24263b;
+  color: white;
+  padding: 15px;
+  text-align: center;
+}
+
+.container-mobility {
+  display: grid;
+  grid-template-columns: 800px 600px;
+  border: 10px solid #0000;
+    background: #24263b;
+  grid-template-rows: auto auto;
+}
+
+.map {
+  grid-column: 1;
+  grid-row: 1;
+  width: 800px;
+  height: 110%;
+  justify-self: left;
+  opacity: 0.9;
+}
+
+.map-title{
+  fill:white;
+
+}
+
+.bar{
+  grid-column: 2;
+  grid-row: 1;
+  width: 90%;
+  height: 80%;
+  size:16px;
+}
+
+.bar-title{
+  size: 20px;
+  fill:white;
+}
+
+.tooltip {
+  position: absolute;
+  pointer-events: none;
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 0px;
+}
+
+.tooltip p {
+  margin: 4px;
+}
+.label {
+  fill:white;
+}
+
+
+.state {
+  stroke:#55f4c3;
+  stroke-width:0.5px;
+}
+
+.state:hover {
+  cursor: pointer;
+}
+
+.state.active {
+  opacity: 0.8;
+  stroke: #55f4c3;
+  stroke-width: 1px;
+}
+
+.y-axis-label {
+  font-size: 16px;
+  fill: white;
+}
+
+.x-axis line{
+  stroke:white !important;
+}
+.x-axis path{
+  stroke:white !important;
+}
+
+.y-axis line{
+  stroke:white !important;
+}
+.y-axis path{
+  stroke:white !important;
+}
+
+.tick text {
+  font-size:14px;
+  fill:white;
+}
