@@ -10,6 +10,83 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
     <title>Restaurant Industry Performance Under COVID-19</title>
+    <style>
+        .intro-ln1 {
+          padding-left: 400px;
+          color: white;
+        }
+
+        .intro-ln2 {
+          padding-left: 330px;
+          color: white;
+        }
+
+        .intro-ln3 {
+          padding-left: 420px;
+          color: white
+        }
+
+        .rest-button {
+            padding-left: 600px;
+            color: white;
+        }
+
+        .rest-column {
+            float: left;
+            width: 50%;
+            padding-left: 130px;
+        }
+
+        .rest-row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .rest-row {
+            color: orange;
+            font-size: 9pt;
+        }
+
+        div.tabletitle{
+            padding-left: 170px;
+        }
+
+        label {
+            color: white;
+        }
+
+        .rest-filter {
+            width: 400px;
+            margin: 0 auto;
+        }
+
+        .rest-charts {
+            clear: both;
+            margin-top: 50px;
+        }
+
+        #left, #right {
+            width: 47%;
+            margin-left: 2%;
+            height: 650px;
+            float: left;
+            overflow: scroll;
+            position: relative;
+        }
+
+        svg {
+            position: relative;
+        }
+
+        .tooltip {
+            position: fixed;
+            width:70px;
+            right:10px;
+            top:10px;
+            color: white;
+        }
+  </style>   
   </head>
 
   <body>
@@ -179,6 +256,48 @@
 
     <script type="module" src="/_dist_/app.js"></script>
     <script type="module" src="/_dist_/lineGraph.js"></script>
+
+    <div class = "restaurant">
+        <div class = "rest-intro">
+    <b class = "intro-ln1"> Among all, restaurant is one of the industries hit the most by the pandemic. </b>
+    <br>
+    <b class = "intro-ln2"> The following tables examine Open Table's year-to-year restaurant performance globally， </b>
+    <br> 
+    <b class = "intro-ln3"> in the United States, and in the U.S. states with the most restaurants. </b>
+  </div>
+
+  <br>
+
+    <div class="rest-filter">
+        <label> State 1: </label>
+        <select id="state1" onchange="change()"></select>
+        <br>
+        <label> State 2:</label>
+        <select id="state2" onchange="change()"></select>
+    </div>
+    <br>
+    <div class = "rest-button">
+        <p style = "width:180px;height:30px;border:1px;border-radius:20px;background-color:#0288D1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add Comparison </p>
+<!--         <svg width="200" height="80">
+            <rect x="50" y="20" rx="20" ry="20" width="150" height="50"
+            style="fill:#0288D1;opacity=0.5;" />
+        </svg> -->
+    </div>
+
+    <div class = "rest-row">
+        <div class="rest-column"><h2>SEATED DINERS FROM ONLINE, PHONE, & WALK-IN RESERVATIONS</h2></div>
+
+        <div class="rest-column"><h2>SEATED DINERS AT RESTAURANTS <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; OPEN FOR RESERVATIONS</h2></div>
+    </div>
+
+    <div class="rest-charts">
+        <div id="left"></div>
+        <div id="right"></div>
+    </div>
+
+<!--     <script type="module" src="/_dist_/lineGraph.js"></script>  -->
+    <script type="module" src="/_dist_/restaurant.js"> </script>
+    </div>
 
   </body>
 </html>
