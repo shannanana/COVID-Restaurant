@@ -172,3 +172,58 @@ body {
   outline: none;
   width: 5em;
 }
+
+.dinerDataLine {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 2px;
+}
+
+.covidDataLine {
+  fill: none;
+  stroke: #f22c5a;
+  stroke-width: 3px;
+}
+
+.dinerDataArea {
+  fill: lightsteelblue;
+  opacity: 0.5;
+}
+
+.dinerDataPoint {
+  opacity: 0;
+}
+
+.dinerDataPoint:hover {
+  opacity: 1;
+}
+
+.annotationCircle {
+  r: 5px;
+  fill: #f22c5a;
+}
+
+.annotationLine {
+  fill: none;
+  stroke: #c4c4c4;
+  stroke-width: 2px;
+}
+
+.axis {
+  color: white;
+}
+
+.label {
+  color: white;
+  fill: white;
+}
+
+.testText:hover {
+  fill: yellow;
+}
+
+.testText {
+  fill: white;
+}
+
+
