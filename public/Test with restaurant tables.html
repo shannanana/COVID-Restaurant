@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="/main.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Space+Mono:400,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    
+    <title>Restaurant Industry Performance Under COVID-19</title>
+    <style>
+        .intro-ln1 {
+          padding-left: 400px;
+          color: black;
+        }
+
+        .intro-ln2 {
+          padding-left: 330px;
+          color: black;
+        }
+
+        .intro-ln3 {
+          padding-left: 420px;
+          color: black;
+        }
+
+        .rest-button {
+            padding-left: 600px;
+        }
+
+        .rest-column {
+            float: left;
+            width: 50%;
+            padding-left: 130px;
+        }
+
+        .rest-row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .rest-row {
+            color: orange;
+            font-size: 11pt;
+        }
+
+        div.tabletitle{
+            padding-left: 170px;
+        }
+
+        label {
+            color: black;
+        }
+
+        .rest-filter {
+            width: 400px;
+            margin: 0 auto;
+        }
+
+        .rest-charts {
+            clear: both;
+            margin-top: 50px;
+        }
+
+        #left, #right {
+            width: 47%;
+            margin-left: 2%;
+            height: 650px;
+            float: left;
+            overflow: scroll;
+            position: relative;
+        }
+
+        svg {
+            position: relative;
+        }
+
+        .tooltip {
+            position: fixed;
+            width:70px;
+            right:10px;
+            top:10px;
+            color: white;
+        }
+    </style>   
+  </head>
+
+  <body>
+    <div class="w3-top">
+      <div class="w3-bar w3-white w3-wide w3-padding w3-card">
+        <a href="#home" class="w3-bar-item w3-button"><b>Info</b> Viz</a>
+        <!-- Float links to the right. Hide them on small screens -->
+        <div class="w3-right w3-hide-small">
+          <a href="#global case" class="w3-bar-item w3-button">Global COVID</a>
+          <a href="#mobility" class="w3-bar-item w3-button">US Mobility</a>
+          <a href="#Restaurants" class="w3-bar-item w3-button">Restaurants Data</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Header -->
+    <header class="w3-display-container w3-content" style="max-width:1500px;" id="home">
+      <img class="w3-image" src="Title img.png" alt="Title img" width="1400" height="1500">
+      <div class="w3-display-left w3-center">
+        <h1 style="padding-left: 100px" id="title1">COVID-19 Restaurant Viz</h1>
+        <h3 style="padding-left: 50px">Team Wasabi Oreo</h3>
+      </div>
+      <div class="w3-container w3-center" id="overview">
+        <h3>Overview</h3>
+        <img class="w3-image"  src="line.png" width="50" height="2">
+        <p class="w3-center" style="margin-inline-start:300px; margin-inline-end: 300px;">This project examines the evolving situation and challenges faced
+           by the global restaurant industry under the impact of pandemic (February 2020 - present) specifically through the lens of changes in
+           customer behavior and public sentiment towards the pandemic. </p>
+      </div>
+    </header>
+   
+    <div class=w3-container>
+      <div class="w3-row w3-center title">Global View</div>
+      
+      <div class="w3-col w3-padding-large" id="globeViz" style="width:70%"></div>     
+      <div class="w3-col w3-padding-large" style="width:30%;color:white">This is text</div>
+
+      <div class="w3-row w3-center">
+        <div style="display: flex; justify-content: center;">
+          <div class="timeline-container">
+            <button disabled style="margin-right: 10px;" class="play-button">
+              Play
+            </button>
+            <input
+              class="slider"
+              disabled
+              type="range"
+              min="0"
+              max="1"
+              step="1"
+            />
+            <span
+              style="font-size: 14px; color: #ccd6f6;"
+              class="slider-date"
+            ></span>
+          </div>
+        </div>
+        <div style="font-size: 14px; color: #ccd6f6; margin-top: 35px;">
+          Total Counts <span class="updated"></span>
+        </div>
+        <div style="color: #e6f1ff; padding: 0 5px;">
+          INFECTED: <span id="infected">0</span> • DEATHS:
+          <span id="deaths">0</span> • RECOVERED: <span id="recovered">0</span>
+        </div>
+      </div>
+
+    </div>
+    
+    <!-- <div class="w3-container w3-center" id="globeViz" style="width:70%;float:left;"></div>
+    <div class="w3-row w3-center top-info-container">
+      <div class="title">Global View</div>
+    </div> -->
+
+    <!-- <div class="bottom-info-container">
+      <div style="display: flex; justify-content: center;">
+        <div class="timeline-container">
+          <button disabled style="margin-right: 10px;" class="play-button">
+            Play
+          </button>
+          <input
+            class="slider"
+            disabled
+            type="range"
+            min="0"
+            max="1"
+            step="1"
+          />
+          <span
+            style="font-size: 14px; color: #ccd6f6;"
+            class="slider-date"
+          ></span>
+        </div>
+      </div>
+      <div style="font-size: 14px; color: #ccd6f6; margin-top: 35px;">
+        Total Counts <span class="updated"></span>
+      </div>
+      <div style="color: #e6f1ff; padding: 0 5px;">
+        INFECTED: <span id="infected">0</span> • DEATHS:
+        <span id="deaths">0</span> • RECOVERED: <span id="recovered">0</span>
+      </div>
+    </div>
+    
+    <div class="right-text-container">
+      This is text
+    </div>
+    
+    <div class="section2">
+      Section2
+    </div> -->
+
+    <defs>
+      <linearGradient id="grad2" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" style="stop-color:rgb(255,50,0);stop-opacity:1" />
+        <stop offset="100%" style="stop-color:rgb(255,255,0);stop-opacity:1" />
+      </linearGradient>
+    </defs>
+
+
+    <div class="w3-container w3-card">
+      <h1 class="w3-center">YoY Restaurant Traffic Change</h1>
+      <div class="w3-col" style="width:30%" id="lineGraphSection"></div>
+    </div>
+
+    <script type="module" src="/_dist_/app.js"></script>
+    <script type="module" src="/_dist_/lineGraph.js"></script> 
+
+
+
+    <div class = "restaurant">
+        <div class = "rest-intro">
+    <b class = "intro-ln1"> Among all, restaurant is one of the industries hit the most by the pandemic. </b>
+    <br>
+    <b class = "intro-ln2"> The following tables examine Open Table's year-to-year restaurant performance globally， </b>
+    <br> 
+    <b class = "intro-ln3"> in the United States, and in the U.S. states with the most restaurants. </b>
+  </div>
+
+  <br>
+
+    <div class="rest-filter">
+        <label> State 1: </label>
+        <select id="state1" onchange="change()"></select>
+        &nbsp;&nbsp;&nbsp;
+        <label> State 2:</label>
+        <select id="state2" onchange="change()"></select>
+    </div>
+
+    <div class = "rest-button">
+        <p style = "width:180px;height:30px;border:1px;border-radius:20px;background-color:#0288D1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add Comparison </p>
+<!--         <svg width="200" height="80">
+            <rect x="50" y="20" rx="20" ry="20" width="150" height="50"
+            style="fill:#0288D1;opacity=0.5;" />
+        </svg> -->
+    </div>
+
+    <div class = "rest-row">
+        <div class="rest-column"><h2>SEATED DINERS FROM ONLINE, PHONE, <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; & WALK-IN RESERVATIONS</h2></div>
+
+        <div><h2><br>SEATED DINERS AT RESTAURANTS <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; OPEN FOR RESERVATIONS</h2></div>
+    </div>
+
+    <div class="rest-charts">
+        <div id="left"></div>
+        <div id="right"></div>
+    </div>
+
+
+    <script src="./restaurant.js"> </script>
+    </div>
+    
+  </body>
+</html>
