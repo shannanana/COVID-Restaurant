@@ -1,0 +1,234 @@
+﻿State,Date,Value
+Global,5/18/2020,41.05
+Global,5/25/2020,50.17
+Global,06/01/2020,51.65
+Global,06/08/2020,54.59
+Global,6/15/2020,64.49
+Global,6/22/2020,59.53
+Global,6/29/2020,56.88
+Global,07/06/2020,58.12
+Global,7/13/2020,58.74
+Global,7/20/2020,60.04
+Global,7/27/2020,63.19
+Global,08/03/2020,65.91
+Global,08/10/2020,68.47
+Global,8/17/2020,72.84
+Global,8/24/2020,75.59
+Global,8/31/2020,84
+Global,09/07/2020,75.27
+Global,9/14/2020,74.64
+Global,9/21/2020,75.33
+Global,9/28/2020,74.75
+Global,10/05/2020,75.6
+Global,10/12/2020,72.84
+Global,10/19/2020,71.27
+Global,10/26/2020,68.51
+Global,11/02/2020,65.85
+United States,5/18/2020,41.03
+United States,5/25/2020,51.68
+United States,06/01/2020,50.77
+United States,06/08/2020,54.33
+United States,6/15/2020,64.97
+United States,6/22/2020,58.59
+United States,6/29/2020,54.94
+United States,07/06/2020,55.51
+United States,7/13/2020,55.37
+United States,7/20/2020,56.06
+United States,7/27/2020,59.22
+United States,08/03/2020,61.45
+United States,08/10/2020,64.05
+United States,8/17/2020,68.15
+United States,8/24/2020,69.93
+United States,8/31/2020,80.94
+United States,09/07/2020,72.05
+United States,9/14/2020,72.4
+United States,9/21/2020,74.23
+United States,9/28/2020,73.97
+United States,10/05/2020,75.4
+United States,10/12/2020,72.75
+United States,10/19/2020,71.67
+United States,10/26/2020,67.16
+United States,11/02/2020,64.02
+California,5/25/2020,62.17
+California,06/01/2020,49.88
+California,06/08/2020,55.16
+California,6/15/2020,66.52
+California,6/22/2020,61.66
+California,6/29/2020,53.02
+California,07/06/2020,54.13
+California,7/13/2020,50.47
+California,7/20/2020,53.86
+California,7/27/2020,57.6
+California,08/03/2020,61.44
+California,08/10/2020,62.44
+California,8/17/2020,61.51
+California,8/24/2020,67.03
+California,8/31/2020,78.51
+California,09/07/2020,72.61
+California,9/14/2020,76.57
+California,9/21/2020,79.75
+California,9/28/2020,78.39
+California,10/05/2020,80.75
+California,10/12/2020,82.03
+California,10/19/2020,78.26
+California,10/26/2020,78.35
+California,11/02/2020,67.53
+Florida,5/18/2020,49.95
+Florida,5/25/2020,58.66
+Florida,06/01/2020,60.35
+Florida,06/08/2020,65.78
+Florida,6/15/2020,72.96
+Florida,6/22/2020,61.62
+Florida,6/29/2020,53.86
+Florida,07/06/2020,54.17
+Florida,7/13/2020,52.56
+Florida,7/20/2020,53.35
+Florida,7/27/2020,53.53
+Florida,08/03/2020,59.47
+Florida,08/10/2020,65.1
+Florida,8/17/2020,65.86
+Florida,8/24/2020,80.38
+Florida,8/31/2020,93
+Florida,09/07/2020,75.71
+Florida,9/14/2020,75.74
+Florida,9/21/2020,78.05
+Florida,9/28/2020,77.4
+Florida,10/05/2020,82.29
+Florida,10/12/2020,80.47
+Florida,10/19/2020,77.58
+Florida,10/26/2020,78.23
+Florida,11/02/2020,66.8
+Illinois,06/01/2020,39.25
+Illinois,06/08/2020,40.49
+Illinois,6/15/2020,56.59
+Illinois,6/22/2020,54.26
+Illinois,6/29/2020,56.44
+Illinois,07/06/2020,54.18
+Illinois,7/13/2020,52.2
+Illinois,7/20/2020,53
+Illinois,7/27/2020,54.98
+Illinois,08/03/2020,57
+Illinois,08/10/2020,56.69
+Illinois,8/17/2020,63.35
+Illinois,8/24/2020,61.75
+Illinois,8/31/2020,71.5
+Illinois,09/07/2020,60.02
+Illinois,9/14/2020,63.47
+Illinois,9/21/2020,68.64
+Illinois,9/28/2020,61.19
+Illinois,10/05/2020,66.57
+Illinois,10/12/2020,55.68
+Illinois,10/19/2020,52.33
+Illinois,10/26/2020,41.88
+Illinois,11/02/2020,46.1
+Massachusetts,06/08/2020,47.98
+Massachusetts,6/15/2020,61.76
+Massachusetts,6/22/2020,59.4
+Massachusetts,6/29/2020,56.73
+Massachusetts,07/06/2020,63.46
+Massachusetts,7/13/2020,62.23
+Massachusetts,7/20/2020,63.28
+Massachusetts,7/27/2020,65.75
+Massachusetts,08/03/2020,65.27
+Massachusetts,08/10/2020,66.66
+Massachusetts,8/17/2020,71.03
+Massachusetts,8/24/2020,74.22
+Massachusetts,8/31/2020,82.11
+Massachusetts,09/07/2020,74.52
+Massachusetts,9/14/2020,72.51
+Massachusetts,9/21/2020,72.04
+Massachusetts,9/28/2020,75.09
+Massachusetts,10/05/2020,72.94
+Massachusetts,10/12/2020,65.22
+Massachusetts,10/19/2020,69.88
+Massachusetts,10/26/2020,53.44
+Massachusetts,11/02/2020,58.16
+New Jersey,6/15/2020,70.69
+New Jersey,6/22/2020,72.03
+New Jersey,6/29/2020,69.83
+New Jersey,07/06/2020,67.02
+New Jersey,7/13/2020,81.92
+New Jersey,7/20/2020,70.99
+New Jersey,7/27/2020,76.45
+New Jersey,08/03/2020,74.91
+New Jersey,08/10/2020,80.66
+New Jersey,8/17/2020,92.63
+New Jersey,8/24/2020,87.37
+New Jersey,8/31/2020,95.78
+New Jersey,09/07/2020,95.53
+New Jersey,9/14/2020,95.57
+New Jersey,9/21/2020,97.94
+New Jersey,9/28/2020,95.24
+New Jersey,10/05/2020,97.12
+New Jersey,10/12/2020,85.13
+New Jersey,10/19/2020,92.7
+New Jersey,10/26/2020,74.47
+New Jersey,11/02/2020,87.76
+New York,6/15/2020,58.51
+New York,6/22/2020,47.12
+New York,6/29/2020,48.08
+New York,07/06/2020,46.7
+New York,7/13/2020,53.04
+New York,7/20/2020,51.52
+New York,7/27/2020,54.66
+New York,08/03/2020,55.22
+New York,08/10/2020,59.06
+New York,8/17/2020,68.77
+New York,8/24/2020,67.69
+New York,8/31/2020,74.79
+New York,09/07/2020,66.89
+New York,9/14/2020,63.35
+New York,9/21/2020,68.19
+New York,9/28/2020,63.81
+New York,10/05/2020,61.85
+New York,10/12/2020,57.71
+New York,10/19/2020,61.07
+New York,10/26/2020,48.02
+New York,11/02/2020,53.36
+Pennsylvania,06/08/2020,48.5
+Pennsylvania,6/15/2020,60.29
+Pennsylvania,6/22/2020,61.22
+Pennsylvania,6/29/2020,58.67
+Pennsylvania,07/06/2020,52.79
+Pennsylvania,7/13/2020,57.54
+Pennsylvania,7/20/2020,54.51
+Pennsylvania,7/27/2020,60.21
+Pennsylvania,08/03/2020,61.15
+Pennsylvania,08/10/2020,66.66
+Pennsylvania,8/17/2020,72.69
+Pennsylvania,8/24/2020,73.99
+Pennsylvania,8/31/2020,80.75
+Pennsylvania,09/07/2020,71.85
+Pennsylvania,9/14/2020,69.84
+Pennsylvania,9/21/2020,70.66
+Pennsylvania,9/28/2020,75.11
+Pennsylvania,10/05/2020,77.04
+Pennsylvania,10/12/2020,70.52
+Pennsylvania,10/19/2020,73.86
+Pennsylvania,10/26/2020,58.56
+Pennsylvania,11/02/2020,65.67
+Texas,5/18/2020,41.86
+Texas,5/25/2020,52.61
+Texas,06/01/2020,57.12
+Texas,06/08/2020,56.69
+Texas,6/15/2020,65.08
+Texas,6/22/2020,48.26
+Texas,6/29/2020,43.37
+Texas,07/06/2020,45.1
+Texas,7/13/2020,47.03
+Texas,7/20/2020,49.68
+Texas,7/27/2020,56.2
+Texas,08/03/2020,59.45
+Texas,08/10/2020,62.46
+Texas,8/17/2020,64.65
+Texas,8/24/2020,64.2
+Texas,8/31/2020,77.94
+Texas,09/07/2020,72.85
+Texas,9/14/2020,75.88
+Texas,9/21/2020,70.17
+Texas,9/28/2020,78.02
+Texas,10/05/2020,76.77
+Texas,10/12/2020,76.84
+Texas,10/19/2020,75.52
+Texas,10/26/2020,72.92
+Texas,11/02/2020,69.26
