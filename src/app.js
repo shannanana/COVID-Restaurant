@@ -25,8 +25,8 @@ init();
 
 function init() {
   world = Globe()(globeContainer)
-    .width(innerWidth*0.7)
-    .height(innerHeight*0.7)
+    .width(innerWidth*0.65)
+    .height(innerHeight*0.65)
     .globeImageUrl(GLOBE_IMAGE_URL)
     .backgroundImageUrl(BACKGROUND_IMAGE_URL)
     .showGraticules(false)
@@ -234,6 +234,6 @@ if ('oninput' in slider) {
 
 // Responsive globe
 window.addEventListener('resize', (event) => {
-  world.width([event.target.innerWidth]*0.7);
-  world.height([event.target.innerHeight]*0.7);
+  world.width([event.target.innerWidth]*0.65);
+  world.height([event.target.innerHeight]*0.65);
 });

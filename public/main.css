@@ -9,6 +9,13 @@ body {
   background: black;
 }
 
+.globeViz-text {
+  font-size: 20px;
+  color: white;
+  text-align: left;
+  width: 30%;
+  float:right; 
+}
 
 .top-info-container {
   z-index: 1;
@@ -356,4 +363,80 @@ body {
 .tick text {
   font-size:14px;
   fill:white;
+}
+
+.intro-ln1 {
+  padding-left: 400px;
+  color: white;
+}
+
+.intro-ln2 {
+  padding-left: 330px;
+  color: white;
+}
+
+.intro-ln3 {
+  padding-left: 420px;
+  color: white
+}
+
+.rest-button {
+    padding-left: 600px;
+    color: white;
+}
+
+.rest-column {
+    float: left;
+    width: 50%;
+    padding-left: 130px;
+}
+
+.rest-row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.rest-row {
+    color: orange;
+    font-size: 9pt;
+}
+
+div.tabletitle{
+    padding-left: 170px;
+}
+
+label {
+    color: white;
+}
+
+.rest-filter {
+    width: 400px;
+    margin: 0 auto;
+}
+
+.rest-charts {
+    clear: both;
+    margin-top: 50px;
+}
+
+#left, #right {
+    width: 47%;
+    margin-left: 2%;
+    height: 650px;
+    float: left;
+    overflow: scroll;
+    position: relative;
+}
+
+svg {
+    position: relative;
+}
+
+.tooltip {
+    position: fixed;
+    width:70px;
+    right:10px;
+    top:10px;
+    color: white;
 }

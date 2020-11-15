@@ -10,83 +10,6 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
     <title>Restaurant Industry Performance Under COVID-19</title>
-    <style>
-        .intro-ln1 {
-          padding-left: 400px;
-          color: white;
-        }
-
-        .intro-ln2 {
-          padding-left: 330px;
-          color: white;
-        }
-
-        .intro-ln3 {
-          padding-left: 420px;
-          color: white
-        }
-
-        .rest-button {
-            padding-left: 600px;
-            color: white;
-        }
-
-        .rest-column {
-            float: left;
-            width: 50%;
-            padding-left: 130px;
-        }
-
-        .rest-row:after {
-            content: "";
-            display: table;
-            clear: both;
-        }
-
-        .rest-row {
-            color: orange;
-            font-size: 9pt;
-        }
-
-        div.tabletitle{
-            padding-left: 170px;
-        }
-
-        label {
-            color: white;
-        }
-
-        .rest-filter {
-            width: 400px;
-            margin: 0 auto;
-        }
-
-        .rest-charts {
-            clear: both;
-            margin-top: 50px;
-        }
-
-        #left, #right {
-            width: 47%;
-            margin-left: 2%;
-            height: 650px;
-            float: left;
-            overflow: scroll;
-            position: relative;
-        }
-
-        svg {
-            position: relative;
-        }
-
-        .tooltip {
-            position: fixed;
-            width:70px;
-            right:10px;
-            top:10px;
-            color: white;
-        }
-  </style>   
   </head>
 
   <body>
@@ -95,8 +18,8 @@
         <a href="#home" class="w3-bar-item w3-button"><b>Info</b> Viz</a>
         <!-- Float links to the right. Hide them on small screens -->
         <div class="w3-right w3-hide-small">
-          <a href="#global case" class="w3-bar-item w3-button">Global COVID</a>
-          <a href="#mobility" class="w3-bar-item w3-button">US Mobility</a>
+          <a href="#global-case" class="w3-bar-item w3-button">Global COVID</a>
+          <a href="#nav" class="w3-bar-item w3-button">US Mobility</a>
           <a href="#Restaurants" class="w3-bar-item w3-button">Restaurants Data</a>
         </div>
       </div>
@@ -118,11 +41,15 @@
       </div>
     </header>
 
-    <div class="w3-container" >
+    <div class="w3-container" id="global-case">
       <div class="w3-row w3-center title" style="padding-top: 10px">Global View</div>
 
-      <div class="w3-col w3-padding-large" id="globeViz" style="width:70%"></div>
-      <div class="w3-col w3-padding-large" style="width:30%;color:white">This is text</div>
+      <div class="w3-col w3-padding-large" id="globeViz" style="width:60%"></div>
+      <div class="globeViz-text" style="width:30%">
+        <p>Over the past year, the COVID-19 pandemic has ignited a socio-economic crisis like no other; a crisis that has undermined global stability and solidarity. It has stressed how interdependent health and the economy are.</p>
+        <br>
+        <p>With 52 million reported cases and 1.3 million deaths, has shown the dire consequences of chronic under-investment in health on the global economy and on the lives and livelihoods of billions worldwide.</p>
+      </div>
 
       <div class="w3-row w3-center">
         <div style="display: flex; justify-content: center;">
@@ -196,50 +123,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
     <script type="module" src="/_dist_/mobility.js"></script>
 
-
-
-    <!-- <div class="w3-container w3-center" id="globeViz" style="width:70%;float:left;"></div>
-    <div class="w3-row w3-center top-info-container">
-      <div class="title">Global View</div>
-    </div> -->
-
-    <!-- <div class="bottom-info-container">
-      <div style="display: flex; justify-content: center;">
-        <div class="timeline-container">
-          <button disabled style="margin-right: 10px;" class="play-button">
-            Play
-          </button>
-          <input
-            class="slider"
-            disabled
-            type="range"
-            min="0"
-            max="1"
-            step="1"
-          />
-          <span
-            style="font-size: 14px; color: #ccd6f6;"
-            class="slider-date"
-          ></span>
-        </div>
-      </div>
-      <div style="font-size: 14px; color: #ccd6f6; margin-top: 35px;">
-        Total Counts <span class="updated"></span>
-      </div>
-      <div style="color: #e6f1ff; padding: 0 5px;">
-        INFECTED: <span id="infected">0</span> • DEATHS:
-        <span id="deaths">0</span> • RECOVERED: <span id="recovered">0</span>
-      </div>
-    </div>
-
-    <div class="right-text-container">
-      This is text
-    </div>
-
-    <div class="section2">
-      Section2
-    </div> -->
-
     <defs>
       <linearGradient id="grad2" x1="0%" y1="0%" x2="0%" y2="100%">
         <stop offset="0%" style="stop-color:rgb(255,50,0);stop-opacity:1" />
@@ -248,8 +131,8 @@
     </defs>
 
 
-    <div class="w3-container w3-card">
-      <h1 class="w3-center">YoY Restaurant Traffic Change</h1>
+    <div class="w3-container w3-card" id="Restaurants">
+      <h1 class="w3-center" style="color: white;">YoY Restaurant Traffic Change</h1>
       <div class="w3-col" style="width:30%" id="lineGraphSection"></div>
     </div>
 
