@@ -5,9 +5,9 @@ var x = 5;
 
 var sectionDiv = d3.select('#lineGraphSection');
 
-const chartWidth = 1000;
+const chartWidth = 1400;
 const chartHeight = 500;
-const chartXPadding = 100;
+const chartXPadding = 300;
 const chartYPadding = 50;
 
 var svg = sectionDiv.append('svg')
@@ -80,10 +80,10 @@ d3.text('./_dist_/data/Seated_Diner_Data.csv').then(function(text) {
 	});
 
 	selectedDateIndexRange = [0, dateList.length-1];
-	selectedScope = 'country';
+	selectedScope = 'state';
 	selectedRegionList = getListForScope(selectedScope);
-	selectedRegion = 'Global';
-	updateRegionSelector(selectedRegionList);
+	selectedRegion = 'Georgia';
+	// updateRegionSelector(selectedRegionList);
 	createSlider();
 
 	// Load Covid data
@@ -121,8 +121,11 @@ d3.text('./_dist_/data/Seated_Diner_Data.csv').then(function(text) {
 				}
 			});
 
-			selectedCovidDataKey = covidDataToInclude[0];
+			selectedCovidDataKey = covidDataToInclude[2];
 			updateChart();
+			scopeChanged();
+			updateRegionSelector(selectedRegionList);
+			regionSelector.node().selectedIndex = 10
 
 			// console.log(stateList);
 		});
@@ -131,7 +134,6 @@ d3.text('./_dist_/data/Seated_Diner_Data.csv').then(function(text) {
 	
 
 });
-
 
 
 // ===== Axis =====
@@ -167,10 +169,10 @@ var leftAxisLabel = svg.append('text')
 var rightAxisLabel = svg.append('text')
 	.classed('axis label', true)
 	.attr("text-anchor", "middle")
-	.attr('transform', 'translate('+[chartWidth-chartXPadding+axisLabelOffset, chartHeight/2]+') rotate(-90)')
+	.attr('transform', 'translate('+[chartWidth-chartXPadding+2*axisLabelOffset, chartHeight/2]+') rotate(-90)')
 
 const detailBoxOffset = 10;
-const lineHeight = 15;
+const lineHeight = 20;
 const boxWidth = 150;
 const boxHeight = lineHeight * 4;
 
@@ -212,7 +214,7 @@ function updateDetailBox(date, region=selectedRegionList[selectedRegion]) {
 	let switchPositionDate = (selectedDateIndexRange[1] - selectedDateIndexRange[0]) * (boxWidth + detailBoxOffset) / (chartWidth - 2 * chartXPadding)
 
 	if (dateIndex < switchPositionDate ) {
-		detailBox.attr('transform', 'translate('+[chartWidth - chartXPadding - boxWidth - detailBoxOffset, chartHeight - chartYPadding - boxHeight - detailBoxOffset]+')');
+		detailBox.attr('transform', 'translate('+[chartWidth - chartXPadding - boxWidth - detailBoxOffset, chartHeight - 2*chartYPadding - boxHeight]+')');
 	} else {
 		detailBox.attr('transform', 'translate('+[chartXPadding + detailBoxOffset, chartYPadding + detailBoxOffset]+')');
 	}
@@ -220,13 +222,28 @@ function updateDetailBox(date, region=selectedRegionList[selectedRegion]) {
 	if (region.covidData !== undefined && region.covidData[selectedCovidDataKey] !== undefined) {	
 		covidText.text(region.covidData[selectedCovidDataKey][dateIndex])
 		covidText.attr('opacity', 1)
-		covidTextLabel.text('Covid ' + selectedCovidDataKey)
+		covidTextLabel.text('Covid ' + covidDataKeyToDescription(selectedCovidDataKey))
 		covidTextLabel.attr('opacity', 1)
 		detailBoxFrameRect.attr('height', boxHeight + 2 * lineHeight);
 	} else {
 		covidText.attr('opacity', 0)
 		covidTextLabel.attr('opacity', 0)
 		detailBoxFrameRect.attr('height', boxHeight);
+	}
+}
+
+function covidDataKeyToDescription(key) {
+	switch(key) {
+		case 'death':
+			return 'Deaths'
+		case 'hospitalized':
+			return 'Hospitalized'
+		case 'positive':
+			return 'Positive'
+		case 'totalTestResults':
+			return "Tests Given"
+		default:
+			return
 	}
 }
 
@@ -483,17 +500,24 @@ function getCovidAxisLabel(key=selectedCovidDataKey) {
 
 
 
-// ====== Selector ======
-var selectorDiv = sectionDiv
-	.insert('div', ':first-child')
-	.attr('id', 'selectorDiv');
 
-var scopeLabel = selectorDiv.append('label')
+// ====== Selector ======
+// var selectorDiv = sectionDiv
+// 	.insert('div', ':first-child')
+// 	.attr('id', 'selectorDiv');
+
+var scopeSelectorDiv = d3.select('div#scopeSelectorDiv');
+var regionSelectorDiv = d3.select('div#regionSelectorDiv');
+var covidSelectorDiv = d3.select('div#covidSelectorDiv');
+
+var scopeLabel = scopeSelectorDiv.append('label')
 	.classed('selector label', true)
 	.attr('id', 'scopeLabel')
 	.text('Region Scope: ');
 
-var scopeSelector = selectorDiv.append('select')
+// scopeSelectorDiv.append('br')
+
+var scopeSelector = scopeSelectorDiv.append('select')
 	.classed('custom-select', true)
 	.attr('id', 'scopeSelector')
 	.on('change', scopeChanged);
@@ -508,15 +532,20 @@ var scopeSelectorOptions = scopeSelector.selectAll('option')
 	.text(function(d){
 		return d;
 	})
+	.attr('selected', function(d){
+		if (d=='state') {
+			return 'selected';
+		}
+	})
 
-selectorDiv.append('br');
-
-var regionLabel = selectorDiv.append('label')
+var regionLabel = regionSelectorDiv.append('label')
 	.classed('selector label', true)
 	.attr('id', 'regionLabel')
 	.text('Country: ');
 
-var regionSelector = selectorDiv.append('select')
+// regionSelectorDiv.append('br')
+
+var regionSelector = regionSelectorDiv.append('select')
 	.classed('custom-select', true)
 	.attr('id', 'regionSelector')
 	.on('change', regionChanged);
@@ -582,12 +611,14 @@ function regionChanged() {
     updateChart();
 }
 
-var covidDataKeyLabel = selectorDiv.append('label')
+var covidDataKeyLabel = covidSelectorDiv.append('label')
 	.classed('selector label', true)
 	.attr('id', 'covidDataKeyLabel')
-	.text('Covid Data');
+	.text('Covid Data: ');
 
-var covidDataKeySelector = selectorDiv.append('select')
+// covidSelectorDiv.append('br')
+
+var covidDataKeySelector = covidSelectorDiv.append('select')
 	.classed('custom-select', true)
 	.attr('id', 'covidDataKeySelector')
 	.on('change', covidDataKeyChanged);
@@ -602,8 +633,6 @@ var covidDataKeySelectorOptions = covidDataKeySelector.selectAll('option')
 	.text(function(d){
 		return d;
 	})
-
-selectorDiv.append('br');
 
 function covidDataKeyChanged() {
 	selectedCovidDataKey = covidDataKeySelector.node()
@@ -643,7 +672,7 @@ function createSlider() {
 	var timeSlider = simpleSlider.sliderBottom()
 		.min(dateList[0])
 		.max(dateList[dateList.length-1])
-		.width(300)
+		.width(chartWidth-2*chartXPadding)
 		.tickFormat(dateFormat)
 		.default([dateList[0], dateList[dateList.length-1]])
 		.fill('#2196f3')
@@ -654,11 +683,63 @@ function createSlider() {
 		});
 
 	sectionDiv.append('svg')
-		.attr('width', 500)
+		.attr('width', chartWidth)
 		.attr('height', 100)
 		.append('g')
-		.attr('transform', 'translate(30,30)')
+		.attr('transform', 'translate('+[chartXPadding, 30]+')')
 		.call(timeSlider);
 }
+
+
+let legend = svg.append('g')
+	.attr('transform', 'translate('+[chartXPadding/6, chartYPadding]+')')
+
+legend.append('text')
+	.attr('transform', 'translate('+[-5, 5]+')')
+	.attr('font-weight', 'bold')
+	.text('Legend')
+
+let dinerLegend = legend.append('g')
+	.attr('transform', 'translate('+[0, 50]+')')
+	
+dinerLegend.append('rect')
+	.attr('cx', 0)
+    .attr('cy', 0)
+    .attr('width', chartXPadding/3)
+    .attr('height', 20)
+    .attr('stroke', 'none')
+    .attr('fill', 'url(#mygrad)')
+
+dinerLegend.append('line')
+	.attr('x1', 0)
+    .attr('y1', 20)
+    .attr('x2', chartXPadding/3)
+    .attr('y2', 20)
+    .attr('stroke', '#c4c4c4')
+    .attr('stroke-width', 2)
+
+dinerLegend.append('text')
+	.attr('transform', 'translate('+[-5, -10]+')')
+	.text('Diner (Left Axis):')
+
+
+let covidLegend = legend.append('g')
+	.attr('transform', 'translate('+[0, 110]+')')
+		
+covidLegend.append('line')
+	.attr('x1', 0)
+    .attr('y1', 0)
+    .attr('x2', chartXPadding/3)
+    .attr('y2', 0)
+    .attr('stroke', '#f22c5a')
+    .attr('stroke-width', 3)
+
+covidLegend.append('text')
+	.attr('transform', 'translate('+[-5, -15]+')')
+	.text('Covid (Right Axis):')
+
+
+
+
 
 

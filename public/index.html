@@ -130,27 +130,30 @@
       </linearGradient>
     </defs>
 
-
-    <div class="w3-container w3-card" id="Restaurants">
-      <h1 class="w3-center" style="color: white;">YoY Restaurant Traffic Change</h1>
-      <div class="w3-col" style="width:30%" id="lineGraphSection"></div>
+    <div class = "w3-row w3-padding-large w3-margin-top w3-margin-bottom rest-intro">
+      <b class = "intro-ln1"> Among all, restaurant is one of the industries hit the most by the pandemic. </b>
+      <br>
+      <b class = "intro-ln2"> The following tables examine Open Table's year-to-year restaurant performance globally， </b>
+      <br> 
+      <b class = "intro-ln3"> in the United States, and in the U.S. states with the most restaurants. </b>
     </div>
 
+    <div class="w3-container w3-padding-large w3-margin-bottom" id="lineGraphWrapper">
+      <h1 class="w3-center" style="color: white;">Year-over-Year Restaurant Traffic Change</h1>
+      <div class="grid-container" style="display:grid;grid-template-columns: auto auto auto auto;width:70%;margin-left:auto;margin-right:auto" id="lineGraphSelectors">
+        <!-- class="w3-col l3 m6" -->
+        <div class="grid-item" id="scopeSelectorDiv"></div>
+        <div class="grid-item" id="regionSelectorDiv"></div>
+        <div class="grid-item"></div>
+        <div class="grid-item" id="covidSelectorDiv"></div>
+      </div>
+      <div class="w3-center" id="lineGraphSection"></div>
+    </div>
 
     <script type="module" src="/_dist_/app.js"></script>
     <script type="module" src="/_dist_/lineGraph.js"></script>
 
     <div class = "restaurant">
-        <div class = "rest-intro">
-    <b class = "intro-ln1"> Among all, restaurant is one of the industries hit the most by the pandemic. </b>
-    <br>
-    <b class = "intro-ln2"> The following tables examine Open Table's year-to-year restaurant performance globally， </b>
-    <br> 
-    <b class = "intro-ln3"> in the United States, and in the U.S. states with the most restaurants. </b>
-  </div>
-
-  <br>
-
     <div class="rest-filter">
         <label> State 1: </label>
         <select id="state1" onchange="change()"></select>
