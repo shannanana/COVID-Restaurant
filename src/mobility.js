@@ -1,7 +1,7 @@
 
 function drawBar(data, dataType, state) {
   //SETUP
-  const bar = d3.select("#bar");
+  var bar = d3.select("#bar");
 
   const padding = {
     top: 30,
@@ -253,31 +253,84 @@ d3.queue()
       drawBar(data, currentDataType, state);
     });
 
-    // Update Tooltip
-    d3.selectAll("#map").on("mousemove touchmove", updateTooltip);
-    function updateTooltip() {
-      const tooltip = d3.select(".tooltip");
-      const dataType = d3.select("select").property("value");
+    // // Update Tooltip
+    // d3.selectAll("#map").on("mousemove touchmove", function(d){
+    //   const tooltip = d3.select(".tooltip");
+    //   const dataType = d3.select("select").property("value");
+    //
+    //   var target = d3.select(d3.event.target);
+    //
+    //   var isState = target.classed("state");
+    //
+    //   var data;
+    //   //Map
+    //   if (isState) data = target.data()[0].properties;
+    //
+    //   // tooltip
+    //   //   .style("opacity", +isState)
+    //
+    //
+    //   var matrix = this.getScreenCTM()
+    //     .translate(+ this.getAttribute("cx"), + this.getAttribute("cy"));
+    // tooltip.html(d)
+    //     .style("left", (window.pageXOffset + matrix.e + 15) + "px")
+    //     .style("top", (window.pageYOffset + matrix.f - 30) + "px");
+    //     // .style("left", d3.select(this).attr("cx") + "px")
+    //     // .style("top", d3.select(this).attr("cy") + "px");
+    //
+    //     // // .style("left", `${d3.event.pageX}px`)
+    //     //
+    //     // .style("left", `${d3.event.pageX - tooltip.node().offsetWidth / 2}px`)
+    //     // // .style("top", `${d3.event.pageY}px`);
+    //     // .style("top", `${d3.event.pageY - tooltip.node().offsetHeight - 10}px`);
+    //
+    //     console.log(d3.event.pageX);
+    //     console.log(d3.event.pageY);
+    //     console.log(tooltip.node().offsetWidth);
+    //     console.log(tooltip.node().offsetHeight);
+    //     if (data) {
+    //       tooltip.html(`
+    //         <p>State: ${data.state}</p>
+    //       <p>Mobility Change: ${data[dataType]}%</p>
+    //     `);
+    //     }
+    // });
 
-      var target = d3.select(d3.event.target);
 
-      var isState = target.classed("state");
+      // Update Tooltip
+      d3.selectAll("#map").on("mousemove touchmove", updateTooltip);
+      function updateTooltip() {
+        const tooltip = d3.select(".tooltip-mobility");
+        const dataType = d3.select("select").property("value");
 
-      var data;
-      //Map
-      if (isState) data = target.data()[0].properties;
+        var target = d3.select(d3.event.target);
 
-      tooltip
-        .style("opacity", +isState)
-        .style("left", `${d3.event.pageX - tooltip.node().offsetWidth / 2}px`)
-        .style("top", `${d3.event.pageY - tooltip.node().offsetHeight - 10}px`);
+        var isState = target.classed("state");
 
-      if (data) {
-        tooltip.html(`
-          <p>State: ${data.state}</p>
-        <p>Mobility Change: ${data[dataType]}%</p>
-      `);
-      }
+        var data;
+        //Map
+        if (isState) data = target.data()[0].properties;
+
+        tooltip
+          .style("opacity", +isState)
+
+          // .style("left", `${d3.event.pageX}px`)
+
+          .style("left", `${d3.event.pageX - tooltip.node().offsetWidth / 2}px`)
+          // .style("top", `${d3.event.pageY}px`);
+          .style("top", `${d3.event.pageY - tooltip.node().offsetHeight - 10}px`);
+
+          // console.log(d3.event.pageX);
+          // console.log(d3.event.pageY);
+          // console.log(tooltip.node().offsetWidth);
+          // console.log(tooltip.node().offsetHeight);
+
+        if (data) {
+          tooltip.html(`
+            <p>State: ${data.state}</p>
+          <p>Mobility Change: ${data[dataType]}%</p>
+        `);
+        }
     }
   });
 

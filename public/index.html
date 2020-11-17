@@ -42,7 +42,7 @@
     </header>
 
     <div class="w3-container" id="global-case">
-      <div class="w3-row w3-center title" style="padding-top: 10px">Global View</div>
+      <div class="w3-row w3-center title" style="padding-top: 30px">Global View</div>
 
       <div class="w3-col w3-padding-large" id="globeViz" style="width:60%"></div>
       <div class="globeViz-text" style="width:30%">
@@ -74,7 +74,7 @@
         <div style="font-size: 14px; color: #ccd6f6; margin-top: 35px;">
           Total Counts <span class="updated"></span>
         </div>
-        <div style="color: #e6f1ff; padding: 0 5px;">
+        <div style="color: #e6f1ff; padding: 0 5px; margin-bottom:30px">
           INFECTED: <span id="infected">0</span> • DEATHS:
           <span id="deaths">0</span> • RECOVERED: <span id="recovered">0</span>
         </div>
@@ -85,15 +85,24 @@
 
 
 </div>
+<div class="w3-container" id="transition" style="padding:60px">
+  <img class="w3-image w3-right"  src="remote.png" width="600px" style="padding:60px">
+  <div class="text-block" >
+    <h3 class="w3-center">Impact of COVID-19 on Social Mobility</h3>
+    <p>With spread of COVID-19, most countries have issued policies or encouraged people to stay at home. This also impact restaurants, retail stores, businesses and some public facilities.
+      We want to exam how effective have these policies been in reducing human movement? What impact has it had on how people across the world work; live; and where they visit? And how does the change in people's living style impact restaurant industry?
+    We hereby exam the mobility data which shows how visitors to (or time spent in) categorized places change compared to our baseline days(the same day last year)</p>
+  </div>
+  </div>
     <div id="nav">
       <h1>Mobility Change by Date</h1>
-      <p>
-        Select Date:
-        <span id="currentDate"></span>
-        <input id="date" type="range" step="1" />
-
-        Choose Categories:
-        <select name="categories" id="category-select">
+      <p style="margin:3px">
+        <span style="  vertical-align: middle;">Select Date</span>
+        <input class="slider" style="width: 50%; margin: 15px" id="date" type="range" step="1" />
+        <span style="  vertical-align: middle;" id="currentDate"></span>
+</p>
+<p>
+        Choose Categories:<select name="categories" id="category-select" class = "custom-select " style =" width:150px ;display: initial">
           <option selected value="residential">Residential</option>
           <option value="workplaces">Workplaces</option>
           <option value="transit_stations">Transit Stations</option>
@@ -115,7 +124,7 @@
       </div>
     </section>
 
-    <div class="tooltip"></div>
+    <div class="tooltip-mobility"></div>
 
     <script src="https://d3js.org/d3.v4.js"></script>
     <script src="https://unpkg.com/topojson@3"></script>
@@ -134,7 +143,7 @@
       <b class = "intro-ln1"> Among all, restaurant is one of the industries hit the most by the pandemic. </b>
       <br>
       <b class = "intro-ln2"> The following tables examine Open Table's year-to-year restaurant performance globally， </b>
-      <br> 
+      <br>
       <b class = "intro-ln3"> in the United States, and in the U.S. states with the most restaurants. </b>
     </div>
 
@@ -161,7 +170,7 @@
 
     <div class="rest-filter">
         <label> State 1: </label>
-        <select id="state1" ></select> 
+        <select id="state1" ></select>
         <br>
         <label> State 2:</label>
         <select id="state2" ></select>
