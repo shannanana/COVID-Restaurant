@@ -15,7 +15,7 @@
   <body>
     <div class="w3-top">
       <div class="w3-bar w3-white w3-wide w3-padding w3-card">
-        <a href="#home" class="w3-bar-item w3-button"><b>Info</b> Viz</a>
+        <a href="#home" class="w3-bar-item w3-button"><b>Info</b> Vis</a>
         <!-- Float links to the right. Hide them on small screens -->
         <div class="w3-right w3-hide-small">
           <a href="#global-case" class="w3-bar-item w3-button">Global COVID</a>
@@ -29,7 +29,7 @@
     <header class="w3-display-container w3-content w3-white" style="max-width:1500px;" id="home">
       <img class="w3-image" src="Title img.png" alt="Title img" width="1400" height="1500">
       <div class="w3-display-left w3-center">
-        <h1 style="padding-left: 100px" id="title1">COVID-19 Restaurant Viz</h1>
+        <h1 style="padding-left: 100px" id="title1">COVID-19 Restaurant Vis</h1>
         <h3 style="padding-left: 50px">Team Wasabi Oreo</h3>
       </div>
       <div class="w3-container w3-center w3-white" id="overview">
@@ -108,7 +108,7 @@
           <option value="transit_stations">Transit Stations</option>
           <option value="parks">Parks</option>
           <option value="grocery_and_pharmacy">Grocery and Pharmacy</option>
-          <option value="retail_and_recreation">Retail and Recreastion</option>
+          <option value="retail_and_recreation">Retail and Recreation</option>
         </select>
       </p>
       <p>Click on a state to see the trends. Default: Georgia</p>
@@ -140,11 +140,7 @@
     </defs>
 
     <div class = "w3-row w3-padding-large w3-margin-top w3-margin-bottom rest-intro">
-      <b class = "intro-ln1"> Among all, restaurant is one of the industries hit the most by the pandemic. </b>
-      <br>
-      <b class = "intro-ln2"> The following tables examine Open Table's year-to-year restaurant performance globally， </b>
-      <br>
-      <b class = "intro-ln3"> in the United States, and in the U.S. states with the most restaurants. </b>
+      <p> Restricted mobility hits the restaurant industry hard amid the pandemic. <br> Some blame the restaurants for spreading the coronavirus, <br>while others might simply feel insecure spending time in confined spaces. <br> How have things changed from 2019? <br> Here we look at Open Table's year-over-year restaurant traffic across gerographical locations. </p>
     </div>
 
     <div class="w3-container w3-padding-large w3-margin-bottom" id="lineGraphWrapper">
@@ -162,39 +158,38 @@
     <script type="module" src="/_dist_/app.js"></script>
     <script type="module" src="/_dist_/lineGraph.js"></script>
 
- <!--   <div class = "restaurant"> -->
-    <div id = "rest-intro"><b> Among all, restaurant is one of the industries hit the most by the pandemic. The following tables examine Open Table's year-to-year restaurant performance globally, in the United States, and in the U.S. states with the most restaurants. </b>
-    </div>
 
-    <br>
+<div class="restaurant">
+  <div class="restaurant-text">
+  <p> Zoming the focus onto the U.S. states with the most restaurants, how are restaurants there surviving? <br>How does the state-level performance compares against each other, the national, and even the global performance?</p>
 
-    <div class="rest-filter">
-        <label> State 1: </label>
-        <select id="state1" ></select>
-        <br>
-        <label> State 2:</label>
-        <select id="state2" ></select>
-    </div>
-
-    <br>
-
-<!--     <div id = "rest-button">
-        <p style = "width:180px;height:30px;border:1px;border-radius:20px;background-color:#0288D1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add Comparison </p>
-    </div> -->
-
+  <p> Select two states to compare weekly changes from 2019 </p>
+  <br>
+  </div>
     <div class = "rest-row">
-        <div class="rest-column"><h2>SEATED DINERS FROM ONLINE, PHONE, & WALK-IN RESERVATIONS</h2></div>
+        <div class="rest-column"><h2 class="w3-center">Year-over-Year Change in Seated Diners From Online, Phone, & Walk-in Reservations</h2></div>
 
-        <div class="rest-column"><h2>SEATED DINERS AT RESTAURANTS <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; OPEN FOR RESERVATIONS</h2></div>
+        <div class="rest-column"><h2 class="w3-center">Year-over-Year Change in Seated Diners at Restaurants Open for Reservations</h2></div>
     </div>
+    <br>
 
+     <div class="grid-container" style="display:grid;grid-template-columns: auto auto auto auto;width:50%;margin-left:auto;margin-right:auto">
+        <label> Select State1 : </label>
+        <select class="custom-select" id="state1" ></select>
+        <label> Select State2 :</label>
+        <select class="custom-select" id="state2" ></select>
+      </div>
+      <br>
+      <div class="explanation">
+        <p> * For example, -50% means a 50% reduction in the category compared to the same week in 2019. </p>
+      </div>
     <div class="rest-charts">
         <div id="left"></div>
         <div id="right"></div>
     </div>
 
     <script type="module" src="/_dist_/restaurant.js"> </script>
-<!--     </div> -->
+</div>
 
   </body>
 </html>
