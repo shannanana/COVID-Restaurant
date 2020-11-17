@@ -335,6 +335,7 @@ body {
   box-shadow: 8px 8px 10px #c0c0c0;
 }
 
+
 #transition{
   background: white;
 }
@@ -470,7 +471,7 @@ body {
 }
 
 .rest-row {
-    color: orange;
+    color:white;
     font-size: 9pt;
 }
 
@@ -511,4 +512,17 @@ svg {
     right:10px;
     top:10px;
     color: white;
+}
+
+
+.restaurant-text {
+  font-size: 20px;
+  color: white;
+  text-align: center;
+}
+
+.rest-intro {
+  font-size: 20px;
+  color: white;
+  text-align: center;
 }
