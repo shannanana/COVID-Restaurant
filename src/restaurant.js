@@ -117,26 +117,28 @@
                     }
                 });
 
-            // rect.append("text")
-            //     .attr("dy",".35em")
-            //     .attr("x",function(d){ return x(d.State)+ 40 })
-            //     .attr("y",function(d){ return y(d.Date)+ 40 })
-            //     .style("style","label")
-            //     .style("fill",function (d){
-            //         if (d.Value > -15) {
-            //             if (d.Value < 15) {
-            //                 return "black";  
-            //             }
-            //             else {
-            //             return "white";
-            //             }
-            //         }
-            //         else{
-            //             return "white";
-            //         }
-            //     })
-            //     .style("font-size","16px")
-            //     .text(function(d){ return d.Value + "%"});
+            rect.append("text")
+                .attr("dy",".35em")
+                .attr("x",function(d){ if (x(d.State)==undefined){return  -1000}else{return x(d.State)+40}  })
+                .attr("y",function(d){ return y(d.Date)+ 40 })
+                .style("style","label")
+                .style("fill",function (d){
+                    if (d.Value > -15) {
+                        if (d.Value < 15) {
+                            return "black";  
+                        }
+                        else {
+                        return "white";
+                        }
+                    }
+                    else{
+                        return "white";
+                    }
+                })
+                .style("font-size","13px")
+                .text(function(d){ if (d.Value > 0){
+                    return "+" + d.Value + "%";
+                } else {return d.Value + "%";}});
         }
 
 
