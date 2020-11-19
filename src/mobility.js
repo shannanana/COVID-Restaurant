@@ -1,170 +1,30 @@
-
-function drawBar(data, dataType, state) {
-  var bar = d3.select("#bar");
-
-  const padding = {
-    top: 30,
-    right: 30,
-    bottom: 30,
-    left: 110
-  };
-
-  const width = +bar.attr("width");
-  const height = +bar.attr("height");
-
-  var stateData = data
-  .filter(d => d.state === state)
-  .map(d => {
-    return {
-      ...d,
-      date: d3.timeParse("%Y-%m-%d")(d.date)
-    };
-  });
-
-  var xScale = d3
-  .scaleTime()
-  .domain(d3.extent(stateData, d => d.date))
-  .range([padding.left, width - padding.right]);
-
-  var yScale = d3
-  .scaleLinear()
-  .domain([
-    -d3.max(stateData, d => Math.abs(d[dataType]) * 1.1),
-    d3.max(stateData, d => Math.abs(d[dataType]) * 1.1)
-  ])
-  .range([height - padding.bottom, padding.top]);
-
-  var xAxis = d3.axisBottom(xScale).tickFormat(d3.timeFormat("%b"));
-  d3.select(".x-axis")
-  .attr("transform", `translate(0,${height - padding.bottom})`)
-  .transition()
-  .duration(500)
-  .call(xAxis);
-
-  var yAxis = d3.axisLeft(yScale);
-  d3.select(".y-axis")
-  .attr("transform", `translate(${padding.left},0)`)
-  .transition()
-  .duration(500)
-  .call(yAxis);
-
-  var mapColorScale =
-  d3.scaleSequential(d3.interpolateSpectral)
-  .domain([-50,50]);
-
-  bar.selectAll("rect").remove();
-  bar.selectAll(".bar")
-  .data(stateData)
-  .enter()
-  .append("rect")
-  .merge(bar)
-  .attr("x", function(d) {
-    return xScale(d.date);
-  })
-  .attr("y", function(d) {
-    return yScale(Math.max(0, d[dataType]));
-  })
-  .attr("width", 1.5)
-  .attr("height", function(d) {
-    return Math.abs(yScale(d[dataType]) - yScale(0));
-  })
-  .attr("fill", d => {
-    var val = d[dataType];
-    return val ? mapColorScale(val) : "#eeeeee";
-  });
-
-  bar.exit().remove();
-  var yLabel = `Percent change of ${capitalize(dataType)}`;
-  d3.select(".y-axis-label").text(yLabel);
-
-  var title =
-  `Mobility Trends in ${state}`;
-  d3.select(".bar-title").text(title);
-}
-
-function capitalize(s) {
-  return (s[0].toUpperCase() + s.slice(1)).replaceAll("_", " ");
-}
-
-function drawMap(geoData, data, date, dataType) {
-  var map = d3.select("#map");
-
-  var projection = d3
-  .geoMercator()
-  .translate([+map.attr("width") / 0.75, +map.attr("height") / 0.8])
-  .scale([500]);
-
-
-  var path = d3.geoPath(projection);
-
-  d3.select("#currentDate").text(date);
-
-  geoData.forEach(d => {
-    var states = data.filter(row => row.state == d.properties.state);
-    var state = "";
-    if (states.length > 0) state = states[0].state;
-    d.properties = states.find(s => s.date == date) || { state };
-  });
-
-  const mapColorScale =
-  d3.scaleSequential(d3.interpolateSpectral)
-  .domain([-50,50]);
-
-  var update = map.selectAll(".state").data(geoData);
-
-  update.enter()
-  .append("path")
-  .attr("class","state")
-  .attr("d", path)
-  .on("click", function() {
-    var currentDataType = d3.select("select").property("value");
-    var state = d3.select(this);
-    var isActive = state.classed("active");
-    var stateName = isActive ? "" : state.data()[0].properties.state;
-    drawBar(data, currentDataType, stateName);
-    d3.selectAll(".state").classed("active", false);
-    state.classed("active", !isActive);
-  })
-
-  .merge(update)
-  .transition()
-  .duration(500)
-  .attr("stroke", "#33333")
-  .attr("fill", d => {
-    var val = d.properties[dataType];
-    return val ? mapColorScale(val) : "#666666";
-  });
-
-  d3.select(".map-title").text(`${capitalize(dataType)} Change at ${date}`);
-}
-
-
-
 d3.queue()
 .defer(d3.json, "/_dist_/data/states-10m.json")
-.defer(d3.csv, "/_dist_/data/mobility-state-data.csv", row => {
+.defer(d3.csv, "/_dist_/data/mobility-state-data.csv", function(d) {
   return {
-    date: row.date,
-    state: row.sub_region_1,
-    residential: row.residential_percent_change_from_baseline,
-    workplaces: row.workplaces_percent_change_from_baseline,
-    transit_stations: row.transit_stations_percent_change_from_baseline,
-    parks: row.parks_percent_change_from_baseline,
-    grocery_and_pharmacy: row.grocery_and_pharmacy_percent_change_from_baseline,
-    retail_and_recreation: row.retail_and_recreation_percent_change_from_baseline
+    date: d.date,
+    state: d.sub_region_1,
+    residential: d.residential_percent_change_from_baseline,
+    workplaces: d.workplaces_percent_change_from_baseline,
+    transit_stations: d.transit_stations_percent_change_from_baseline,
+    parks: d.parks_percent_change_from_baseline,
+    grocery_and_pharmacy: d.grocery_and_pharmacy_percent_change_from_baseline,
+    retail_and_recreation: d.retail_and_recreation_percent_change_from_baseline
   };
 })
-.await((error, mapData, data) => {
+.await(ready);
+  function ready(error, mapData, data) {
 
-  var dateArr = [...new Set(data.map(d => d.date))];
+  var dateArray = [...new Set(data.map(function(d) {return d.date}))];
+  console.log(dateArray)
   var min = 0;
-  var max = dateArr.length - 1;
-  var currentDate = dateArr[max];
+  var max = dateArray.length - 1;
+  var currentDate = dateArray[max];
   var currentDataType = d3.select("select").property("value");
   const jsonState = topojson.feature(mapData, mapData.objects.states).features;
 
   d3.select("#map")
-  .attr("width", 900)
+  .attr("width", 950)
   .attr("height", 450)
   .append("text")
   .attr("x", 370)
@@ -209,12 +69,12 @@ d3.queue()
   .attr("min", min)
   .attr("max", max)
   .attr("value", max)
-  .on("input", () => {
-    currentDate = dateArr[+d3.event.target.value];
+  .on("input", function(){
+    currentDate = dateArray[+d3.event.target.value];
     drawMap(jsonState, data, currentDate, currentDataType);
   });
 
-  d3.select("select").on("change", () => {
+  d3.select("select").on("change", function() {
     currentDataType = d3.event.target.value;
     var state = "";
     if (d3.select(".active").data()[0] == undefined) {
@@ -261,7 +121,149 @@ d3.queue()
         `);
       }
     }
+  };
+
+
+function drawBar(data, dataType, state) {
+  var bar = d3.select("#bar");
+
+  const padding = {
+    top: 30,
+    right: 30,
+    bottom: 30,
+    left: 110
+  };
+
+  const width = +bar.attr("width");
+  const height = +bar.attr("height");
+
+  var stateData = data
+  .filter(function(d){ return d.state == state})
+  .map(function(d) {
+    return {
+      ...d,
+      date: d3.timeParse("%Y-%m-%d")(d.date)
+    };
   });
+
+  var xScale = d3
+  .scaleTime()
+  .domain(d3.extent(stateData, function(d){return d.date}))
+  .range([padding.left, width - padding.right]);
+
+  var yScale = d3
+  .scaleLinear()
+  .domain([
+    -d3.max(stateData, function(d) {return Math.abs(d[dataType]) * 1.1}),
+    d3.max(stateData, function(d){return Math.abs(d[dataType]) * 1.1})
+  ])
+  .range([height - padding.bottom, padding.top]);
+
+  var xAxis = d3.axisBottom(xScale).tickFormat(d3.timeFormat("%b"));
+  d3.select(".x-axis")
+  .attr("transform", `translate(0,${height - padding.bottom})`)
+  .transition()
+  .duration(500)
+  .call(xAxis);
+
+  var yAxis = d3.axisLeft(yScale);
+  d3.select(".y-axis")
+  .attr("transform", `translate(${padding.left},0)`)
+  .transition()
+  .duration(500)
+  .call(yAxis);
+
+  var mapColorScale =
+  d3.scaleSequential(d3.interpolateSpectral)
+  .domain([-50,50]);
+
+  bar.selectAll("rect").remove();
+  bar.selectAll(".bar")
+  .data(stateData)
+  .enter()
+  .append("rect")
+  .merge(bar)
+  .attr("x", function(d) {
+    return xScale(d.date);
+  })
+  .attr("y", function(d) {
+    return yScale(Math.max(0, d[dataType]));
+  })
+  .attr("width", 1.5)
+  .attr("height", function(d) {
+    return Math.abs(yScale(d[dataType]) - yScale(0));
+  })
+  .attr("fill", function(d) {
+    var val = d[dataType];
+    return val ? mapColorScale(val) : "#eeeeee";
+  });
+
+  bar.exit().remove();
+  var yLabel = `Percent change of ${capitalize(dataType)}`;
+  d3.select(".y-axis-label").text(yLabel);
+
+  var title =
+  `Mobility Trends in ${state}`;
+  d3.select(".bar-title").text(title);
+}
+
+function capitalize(s) {
+  return (s[0].toUpperCase() + s.slice(1)).replaceAll("_", " ");
+}
+
+function drawMap(geoData, data, date, dataType) {
+  var map = d3.select("#map");
+
+  var projection = d3
+  .geoMercator()
+  .translate([+map.attr("width") / 0.75, +map.attr("height") / 0.8])
+  .scale([500]);
+
+
+  var path = d3.geoPath(projection);
+
+  d3.select("#currentDate").text(date);
+
+  geoData.forEach(function(d) {
+    var states = data.filter(function(a) {return a.state == d.properties.state} );
+    var state = "";
+    if (states.length > 0) state = states[0].state;
+    d.properties = states.find(function(s){return s.date == date}) || { state };
+  });
+
+  const mapColorScale =
+  d3.scaleSequential(d3.interpolateSpectral)
+  .domain([-50,50]);
+
+  var update = map.selectAll(".state").data(geoData);
+
+  update.enter()
+  .append("path")
+  .attr("class","state")
+  .attr("d", path)
+  .on("click", function() {
+    var currentDataType = d3.select("select").property("value");
+    var state = d3.select(this);
+    var isActive = state.classed("active");
+    var stateName = isActive ? "" : state.data()[0].properties.state;
+    drawBar(data, currentDataType, stateName);
+    d3.selectAll(".state").classed("active", false);
+    state.classed("active", !isActive);
+  })
+
+  .merge(update)
+  .transition()
+  .duration(500)
+  .attr("stroke", "#33333")
+  .attr("fill", function(d) {
+    var val = d.properties[dataType];
+    return val ? mapColorScale(val) : "#666666";
+  });
+
+  d3.select(".map-title").text(`${capitalize(dataType)} Change at ${date}`);
+}
+
+
 
   // Legend
   var thresholdScale = d3.scaleSequential(d3.interpolateSpectral)
