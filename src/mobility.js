@@ -1,129 +1,3 @@
-d3.queue()
-.defer(d3.json, "/_dist_/data/states-10m.json")
-.defer(d3.csv, "/_dist_/data/mobility-state-data.csv", function(d) {
-  return {
-    date: d.date,
-    state: d.sub_region_1,
-    residential: d.residential_percent_change_from_baseline,
-    workplaces: d.workplaces_percent_change_from_baseline,
-    transit_stations: d.transit_stations_percent_change_from_baseline,
-    parks: d.parks_percent_change_from_baseline,
-    grocery_and_pharmacy: d.grocery_and_pharmacy_percent_change_from_baseline,
-    retail_and_recreation: d.retail_and_recreation_percent_change_from_baseline
-  };
-})
-.await(ready);
-  function ready(error, mapData, data) {
-
-  var dateArray = [...new Set(data.map(function(d) {return d.date}))];
-  console.log(dateArray)
-  var min = 0;
-  var max = dateArray.length - 1;
-  var currentDate = dateArray[max];
-  var currentDataType = d3.select("select").property("value");
-  const jsonState = topojson.feature(mapData, mapData.objects.states).features;
-
-  d3.select("#map")
-  .attr("width", 950)
-  .attr("height", 450)
-  .append("text")
-  .attr("x", 370)
-  .attr("y", 15)
-  .style("text-anchor", "middle")
-  .attr("class","map-title");
-
-  drawMap(jsonState, data, currentDate, currentDataType);
-
-  var bar = d3
-  .select("#bar")
-  .attr("width",590)
-  .attr("height", 350);
-
-  bar
-  .append("g")
-  .attr("class","x-axis")
-  bar
-  .append("g")
-  .attr("class","y-axis");
-
-  bar
-  .append("text")
-  .attr("transform", "rotate(-90)")
-  .attr("x", -180)
-  .attr("y", 50)
-  .style("text-anchor", "middle")
-  .attr("class","y-axis-label");
-
-  bar
-  .append("text")
-  .attr("x", 350)
-  .attr("y", 15)
-  .style("text-anchor", "middle")
-  .attr("class","bar-title");
-
-
-
-  drawBar(data, currentDataType, "Georgia");
-
-  d3.select("#date")
-  .attr("min", min)
-  .attr("max", max)
-  .attr("value", max)
-  .on("input", function(){
-    currentDate = dateArray[+d3.event.target.value];
-    drawMap(jsonState, data, currentDate, currentDataType);
-  });
-
-  d3.select("select").on("change", function() {
-    currentDataType = d3.event.target.value;
-    var state = "";
-    if (d3.select(".active").data()[0] == undefined) {
-      state = "Georgia";
-    } else {
-      var active = d3.select(".active").data()[0].properties.state;
-      state = active;
-    }
-    drawMap(jsonState, data, currentDate, currentDataType);
-    drawBar(data, currentDataType, state);
-  });
-
-
-
-  d3.selectAll("#map").on("mousemove", updateTooltip);
-  function updateTooltip() {
-    const tooltip = d3.select(".tooltip-mobility");
-    const dataType = d3.select("select").property("value");
-
-    var target = d3.select(d3.event.target);
-
-    var isState = target.classed("state");
-    var data;
-
-    if (isState) data = target.data()[0].properties;
-
-    tooltip
-    .style("opacity", +isState)
-
-
-    .style("left", `${d3.event.pageX - tooltip.node().offsetWidth / 2}px`)
-
-    .style("top", `${d3.event.pageY - tooltip.node().offsetHeight - 10}px`);
-
-    // console.log(d3.event.pageX);
-    // console.log(d3.event.pageY);
-    // console.log(tooltip.node().offsetWidth);
-    // console.log(tooltip.node().offsetHeight);
-
-    if (data) {
-      tooltip.html(`
-        <p>State: ${data.state}</p>
-        <p>Mobility Change: ${data[dataType]}%</p>
-        `);
-      }
-    }
-  };
-
-
 function drawBar(data, dataType, state) {
   var bar = d3.select("#bar");
 
@@ -134,8 +8,8 @@ function drawBar(data, dataType, state) {
     left: 110
   };
 
-  const width = +bar.attr("width");
-  const height = +bar.attr("height");
+  var width = +bar.attr("width");
+  var height = +bar.attr("height");
 
   var stateData = data
   .filter(function(d){ return d.state == state})
@@ -262,6 +136,136 @@ function drawMap(geoData, data, date, dataType) {
 
   d3.select(".map-title").text(`${capitalize(dataType)} Change at ${date}`);
 }
+
+
+
+
+d3.queue()
+.defer(d3.json, "/_dist_/data/states-10m.json")
+.defer(d3.csv, "/_dist_/data/mobility-state-data.csv", function(d) {
+  return {
+    date: d.date,
+    state: d.sub_region_1,
+    residential: d.residential_percent_change_from_baseline,
+    workplaces: d.workplaces_percent_change_from_baseline,
+    transit_stations: d.transit_stations_percent_change_from_baseline,
+    parks: d.parks_percent_change_from_baseline,
+    grocery_and_pharmacy: d.grocery_and_pharmacy_percent_change_from_baseline,
+    retail_and_recreation: d.retail_and_recreation_percent_change_from_baseline
+  };
+})
+.await(ready);
+  function ready(error, mapData, data) {
+
+  var dateArray = [...new Set(data.map(function(d) {return d.date}))];
+  console.log(dateArray)
+  var min = 0;
+  var max = dateArray.length - 1;
+  var currentDate = dateArray[max];
+  var currentDataType = d3.select("select").property("value");
+  const jsonState = topojson.feature(mapData, mapData.objects.states).features;
+
+  d3.select("#map")
+  .attr("width", 950)
+  .attr("height", 450)
+  .append("text")
+  .attr("x", 370)
+  .attr("y", 15)
+  .style("text-anchor", "middle")
+  .attr("class","map-title");
+
+  drawMap(jsonState, data, currentDate, currentDataType);
+
+  var bar = d3
+  .select("#bar")
+  .attr("width",590)
+  .attr("height", 350);
+
+  bar
+  .append("g")
+  .attr("class","x-axis")
+  bar
+  .append("g")
+  .attr("class","y-axis");
+
+  bar
+  .append("text")
+  .attr("transform", "rotate(-90)")
+  .attr("x", -180)
+  .attr("y", 50)
+  .style("text-anchor", "middle")
+  .attr("class","y-axis-label");
+
+  bar
+  .append("text")
+  .attr("x", 350)
+  .attr("y", 15)
+  .style("text-anchor", "middle")
+  .attr("class","bar-title");
+
+
+
+  drawBar(data, currentDataType, "Georgia");
+
+  d3.select("#date")
+  .attr("min", min)
+  .attr("max", max)
+  .attr("value", max)
+  .on("input", function(){
+    currentDate = dateArray[+d3.event.target.value];
+    drawMap(jsonState, data, currentDate, currentDataType);
+  });
+
+  d3.select("select").on("change", function() {
+    currentDataType = d3.event.target.value;
+    var state = "";
+    if (d3.select(".active").data()[0] == undefined) {
+      state = "Georgia";
+    } else {
+      var active = d3.select(".active").data()[0].properties.state;
+      state = active;
+    }
+    drawMap(jsonState, data, currentDate, currentDataType);
+    drawBar(data, currentDataType, state);
+  });
+
+
+
+  d3.selectAll("#map").on("mousemove", updateTooltip);
+  function updateTooltip() {
+    const tooltip = d3.select(".tooltip-mobility");
+    const dataType = d3.select("select").property("value");
+
+    var target = d3.select(d3.event.target);
+
+    var isState = target.classed("state");
+    var data;
+
+    if (isState) data = target.data()[0].properties;
+
+    tooltip
+    .style("opacity", +isState)
+
+
+    .style("left", `${d3.event.pageX - tooltip.node().offsetWidth / 2}px`)
+
+    .style("top", `${d3.event.pageY - tooltip.node().offsetHeight - 10}px`);
+
+    // console.log(d3.event.pageX);
+    // console.log(d3.event.pageY);
+    // console.log(tooltip.node().offsetWidth);
+    // console.log(tooltip.node().offsetHeight);
+
+    if (data) {
+      tooltip.html(`
+        <p>State: ${data.state}</p>
+        <p>Mobility Change: ${data[dataType]}%</p>
+        `);
+      }
+    }
+  };
+
+
 
 
 
